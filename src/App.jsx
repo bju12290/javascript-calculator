@@ -3,45 +3,113 @@ import logo from './assets/logo.svg'
 import './App.css'
 
 function App() {
-  const [displayData, setDisplayData] = React.useState('')
-  const [currentOperator, setCurrentOperator] = React.useState('')
-  const digits = [0,1,2,3,4,5,6,7,8,9]
-  const operators = ["/", "x", "-", "+"]
+  const [answer, setAnswer] = React.useState("")
+  console.log(answer)
+  const [expression, setExpression] = React.useState("")
+  console.log(expression)
+  const buttons = [0,1,2,3,4,5,6,7,8,9,"/", "*", "-", "+",".","C","="]
+  const trimExpression = expression.trim()
 
-  const handleDisplay = (digit) => {
-    if (operators.includes(displayData)) {
-      setDisplayData(`${digit}`)
+  const isOperator = (symbol) => {
+    return /[*/+-]/.test(symbol)
+  }
+
+ const buttonPress = (symbol) => {
+  //console.log(symbol)
+  if (symbol === "C") {
+    setAnswer("")
+    setExpression("0")
+  } else if (isOperator(symbol)) {
+    setExpression(trimExpression + " " + symbol + " ")
+  } else if (symbol === "=") {
+    calculate()
+  } else if (symbol === "0") {
+    if(expression.charAt(0) !== "0") {
+      setExpression(expression + symbol)
+    }
+  } else if (symbol === ".") {
+    const lastNumber = expression.split(/[-+/*]/g).pop();
+    if (lastNumber.includes(".")) return
+    setExpression(expression + symbol)
+  } else {
+    if(expression.charAt(0) === "0") {
+      setExpression(expression.slice(1) + symbol)
     } else {
-      setDisplayData(displayData + digit)
+      setExpression(expression + symbol)
     }
   }
+ }
 
-  const handleOperator = (operator) => {
-    setCurrentOperator(operator)
+ const calculate = () => {
+  if (isOperator(trimExpression.charAt(trimExpression.length - 1))) return;
+  const parts = trimExpression.split(" ")
+  const newParts = []
+
+  // Loop through parts in reverse
+  for (let i = parts.length - 1; i >= 0; i--) {
+    if ((["*","/","+"]).includes(parts[i]) && isOperator(parts[i - 1])) {
+      newParts.unshift(parts[i])
+      let j = 0
+      let k = i - 1
+      while (isOperator(parts[k])) {
+        k--
+        j++
+      }
+      i -= j
+    } else {
+      newParts.unshift(parts[i])
+    }
+  }
+  const newExpression = newParts.join(" ")
+  if (isOperator(newExpression.charAt(0))) {
+    setAnswer(`${eval(answer + newExpression)}`);
+  } else {
+    setAnswer(`${eval(newExpression)}`)
+  }
+  setExpression("")
+ }
+
+ const Buttons = () => {
+
+  const buttonTextMapping = {
+    0: "zero",
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+    "/": "divide",
+    "*": "multiply",
+    "-": "subtract",
+    "+": "add",
+    ".": "decimal",
+    "C": "clear",
+    "=": "equals"
   }
 
-  const DigitElements = () => {
-    const digitElements = digits.map(digit => {
-      return <div onClick={() => handleDisplay(digit)} className={digit === 0 ? "zero digit" : "digit" } id={digit} key={digit}>{digit}</div>
-    })
-    return <div>{digitElements}</div>
-  }
-
-  const OperatorElements = () => {
-    const operatorElements = operators.map(operator => {
-      return <div onClick={() => {
-        handleOperator(operator)
-        setDisplayData(operator)}} className={operator} id={operator} key={operator}>{operator}</div>
-    })
-    return <div>{operatorElements}</div>
-  }
+  const buttonElements = buttons.map(button => {
+    const buttonText = buttonTextMapping[button]
+    return <div key={buttonText} onClick={() => buttonPress(button)} id={buttonText}>{button}</div>
+  })
+  return <div>{buttonElements}</div>
+ }
 
   return (
     <>
-      <div id="display" className="display">{displayData}</div>
-      <div className="equal--button" id="equals">=</div>
-      <DigitElements />
-      <OperatorElements />
+      <div className="container">
+        <h1>JavaScript Calculator</h1>
+        <div id="display" style={{textAlign: "right"}}>
+              <div id="answer">{answer}</div>
+              <div id="expression">{expression}</div>
+            </div>
+          <div id="calculator">
+            <Buttons/>
+          </div>
+      </div>
     </>
   )
 }
