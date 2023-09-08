@@ -72,6 +72,7 @@ function App() {
  const Buttons = () => {
 
   const buttonTextMapping = {
+    "C": "clear",
     0: "zero",
     1: "one",
     2: "two",
@@ -87,26 +88,24 @@ function App() {
     "-": "subtract",
     "+": "add",
     ".": "decimal",
-    "C": "clear",
     "=": "equals"
   }
 
   const buttonElements = buttons.map(button => {
     const buttonText = buttonTextMapping[button]
-    return <div key={buttonText} onClick={() => buttonPress(button)} id={buttonText}>{button}</div>
+    return <button style={{ gridArea: `${buttonText}` }}className={buttonText} key={buttonText} onClick={() => buttonPress(button)} id={buttonText}>{button}</button>
   })
-  return <div>{buttonElements}</div>
+  return <>{buttonElements}</>
  }
 
   return (
     <>
-      <div className="container">
-        <h1>JavaScript Calculator</h1>
-        <div id="display" style={{textAlign: "right"}}>
+      <div className="calculator--container">
+            <div className="display" id="display" style={{textAlign: "right"}}>
               <div id="answer">{answer}</div>
               <div id="expression">{expression}</div>
             </div>
-          <div id="calculator">
+          <div className="calculator" id="calculator">
             <Buttons/>
           </div>
       </div>
