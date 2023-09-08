@@ -1,8 +1,28 @@
-# React + Vite
+# JavaScript Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Usage
 
-Currently, two official plugins are available:
+## Technologies Used
+ - [Vite](https://vitejs.dev/): A build tool that offers fast development and optimized production builds for modern web applications.
+ - [React](https://react.dev/): A JavaScript library for building user interfaces, allowing for the creation of dynamic and interactive components.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ ## Project Structure
+
+ #### Contact Information
+
+Feel free to contact via email! 
+
+```brian.phartnettjr@gmail.com```
+ #### Known Issues
+ 
+
+ #### Project Goals
+
+
+#### Additional Challenges
+
+
+
+
+ 
+
