@@ -12,7 +12,7 @@ This app is a simple calculator. Calculations are made using formula/expression 
  - [React](https://react.dev/): A JavaScript library for building user interfaces, allowing for the creation of dynamic and interactive components.
 
  ## Project Structure
-
+ - **'src/'**: At the heart of the application, the **'src/'** directory houses various project assets, the **main.jsx** file for routing, the **App.jsx** component for program functionality and structure definition, the **App.css** file for application-wide styling, and the the **index.css** file for root styling.
 
  #### Contact Information
 
@@ -23,6 +23,7 @@ Feel free to contact via email!
  #### Known Issues
  
  - Decimals don't ever get cut off, leading to long decimals trailing outside of the container they're in.
+ - Similarly, there is no limit to the number of digits that can be entered. This also leads to numbers trailing outside of the container they're in or even off the viewport entirely.
 
  #### Project Goals
 
